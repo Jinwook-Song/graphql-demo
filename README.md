@@ -1,4 +1,4 @@
-# GraphQL Demo
+# GraphQL Deomo
 
 | 프로젝트 기간 | 22.08.12 ~                |
 | ------------- | ------------------------- |
@@ -110,4 +110,33 @@ userData => new Human(userData)
 
 ```
 https://graphql.org/learn/execution/#root-fields-resolvers
+```
+
+```tsx
+const resolvers = {
+  Query: {
+    allTweets() {
+      return tweets;
+    },
+    tweet(root, { id }) {
+      return tweets.find((tweet) => tweet.id === id);
+    },
+  },
+  Mutation: {
+    postTweet(_, { text, userId }) {
+      const newTweet = {
+        id: tweets.length + 1,
+        text,
+      };
+      tweets.push(newTweet);
+      return newTweet;
+    },
+    deleteTweet(_, { id }) {
+      const tweet = tweets.find((tweet) => tweet.id === id);
+      if (!tweet) return false;
+      tweets = tweets.filter((tweet) => tweet.id !== id);
+      return true;
+    },
+  },
+};
 ```
