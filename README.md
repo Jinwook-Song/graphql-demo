@@ -41,7 +41,7 @@ https://graphql.org/swapi-graphql
 
 `npm i apollo-server graphql`
 
-1. Api 의 shape을 먼저 설명해야 함
+Api 의 shape을 먼저 설명해야 함
 
 ```jsx
 import { ApolloServer, gql } from 'apollo-server';
@@ -58,4 +58,56 @@ const server = new ApolloServer({ typeDefs });
 server.listen().then(({ url }) => {
   console.log(`✅ Running on ${url}`);
 });
+```
+
+---
+
+Query & Mutation
+
+```tsx
+const typeDefs = gql`
+  type User {
+    id: ID!
+    username: String!
+    firstName: String!
+    lastName: String
+  }
+  type Tweet {
+    id: ID!
+    text: String!
+    author: User!
+  }
+  type Query {
+    allTweets: [Tweet!]!
+    tweet(id: ID!): Tweet
+  }
+  type Mutation {
+    postTweet(text: String!, userId: ID!): Tweet!
+    deleteTweet(id: ID!): Boolean!
+  }
+`;
+// GET /api/v1/tweets
+// POST DELETE PUT /api/v1/tweets
+// GET /api/v1/tweet/:id
+```
+
+---
+
+Resolvers
+
+```tsx
+resolver 함수는 데이터베이스에 액세스한 다음 데이터를 반환합니다.
+```
+
+// args는 GraphQL 쿼리의 필드에 제공된 인수입니다.
+Query: {
+human(obj, args, context, info) {
+return context.db.loadHumanByID(args.id).then(
+userData => new Human(userData)
+)
+}
+}
+
+```
+https://graphql.org/learn/execution/#root-fields-resolvers
 ```
