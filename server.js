@@ -31,8 +31,14 @@ const typeDefs = gql`
     id: ID!
     firstName: String!
     lastName: String!
+    """
+    Combine first and last names
+    """
     fullName: String!
   }
+  """
+  Tweet my friends
+  """
   type Tweet {
     id: ID!
     text: String!

@@ -156,3 +156,36 @@ return "hello";
 ```
 https://www.apollographql.com/docs/apollo-server/data/resolvers/#resolver-arguments
 ```
+
+Documentation
+
+```tsx
+const typeDefs = gql`
+  type User {
+    id: ID!
+    firstName: String!
+    lastName: String!
+    """
+    Combine first and last names
+    """
+    fullName: String!
+  }
+  """
+  Tweet my friends
+  """
+  type Tweet {
+    id: ID!
+    text: String!
+    author: User
+  }
+  type Query {
+    allUsers: [User!]!
+    allTweets: [Tweet!]!
+    tweet(id: ID!): Tweet
+  }
+  type Mutation {
+    postTweet(text: String!, userId: ID!): Tweet!
+    deleteTweet(id: ID!): Boolean!
+  }
+`;
+```
